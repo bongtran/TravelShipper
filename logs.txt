@@ -1,0 +1,113 @@
+ERROR: 2018/02/05 15:23:01 utils.go:33: AppError]: no token present in request
+ERROR: 2018/02/05 15:24:09 utils.go:33: AppError]: no token present in request
+ERROR: 2018/02/05 16:21:18 utils.go:33: AppError]: no token present in request
+ERROR: 2018/02/05 16:24:06 utils.go:33: AppError]: token is expired by 41m52s
+ERROR: 2018/02/06 13:10:42 utils.go:33: AppError]: token is expired by 20h26m23s
+ERROR: 2018/02/06 14:26:54 utils.go:33: AppError]: token is expired by 56m1s
+ERROR: 2018/02/08 10:33:48 utils.go:33: AppError]: not found
+ERROR: 2018/02/08 10:34:08 utils.go:33: AppError]: not found
+ERROR: 2018/02/08 10:35:39 utils.go:33: AppError]: not found
+ERROR: 2018/02/08 10:39:49 utils.go:33: AppError]: invalid character '"' after object key:value pair
+ERROR: 2018/02/08 10:41:13 utils.go:33: AppError]: crypto/bcrypt: hashedPassword is not the hash of the given password
+ERROR: 2018/02/08 10:42:17 utils.go:33: AppError]: crypto/bcrypt: hashedPassword is not the hash of the given password
+ERROR: 2018/02/08 10:44:12 utils.go:33: AppError]: not found
+ERROR: 2018/02/08 10:44:30 utils.go:33: AppError]: crypto/bcrypt: hashedPassword is not the hash of the given password
+ERROR: 2018/02/08 10:49:57 utils.go:33: AppError]: ObjectIDs must be exactly 12 bytes long (got 0)
+ERROR: 2018/02/08 10:55:47 utils.go:33: AppError]: token is expired by 67h13m33s
+ERROR: 2018/02/08 11:13:33 utils.go:33: AppError]: no token present in request
+ERROR: 2018/02/08 14:46:34 utils.go:33: AppError]: Horizon error: "Resource Missing". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/08 15:00:37 utils.go:33: AppError]: Horizon error: "Resource Missing". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/08 15:02:43 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/08 15:03:23 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/08 15:07:52 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/08 15:23:48 utils.go:33: AppError]: token is expired by 54s
+ERROR: 2018/02/08 15:24:11 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/08 15:27:09 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/08 15:27:39 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/08 15:32:33 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/08 15:32:49 utils.go:33: AppError]: token is expired by 15m31s
+ERROR: 2018/02/08 15:57:37 utils.go:33: AppError]: token is expired by 13m41s
+ERROR: 2018/02/08 15:58:34 utils.go:33: AppError]: token is expired by 14m38s
+ERROR: 2018/02/08 16:21:58 utils.go:33: AppError]: token is expired by 4m16s
+ERROR: 2018/02/08 16:32:19 utils.go:33: AppError]: token is expired by 48m23s
+ERROR: 2018/02/08 16:32:29 utils.go:33: AppError]: token contains an invalid number of segments
+ERROR: 2018/02/08 16:32:53 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/08 16:42:24 utils.go:33: AppError]: token is expired by 22s
+ERROR: 2018/02/08 16:43:57 utils.go:33: AppError]: token is expired by 1m55s
+ERROR: 2018/02/08 16:44:11 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/09 12:56:41 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/09 14:20:57 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/09 14:30:55 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/09 14:44:08 utils.go:33: AppError]: token is expired by 3m26s
+ERROR: 2018/02/09 14:49:56 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/09 16:38:18 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/09 16:41:43 utils.go:33: AppError]: token contains an invalid number of segments
+ERROR: 2018/02/09 16:45:41 utils.go:33: AppError]: token is expired by 29m18s
+ERROR: 2018/02/09 16:45:56 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/09 17:07:51 utils.go:33: AppError]: token is expired by 8m34s
+ERROR: 2018/02/09 17:09:11 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/09 17:29:17 utils.go:33: AppError]: token is expired by 1m20s
+ERROR: 2018/02/22 14:41:02 utils.go:33: AppError]: token is expired by 308h51m40s
+ERROR: 2018/02/22 14:51:00 utils.go:33: AppError]: token is expired by 314h51m53s
+ERROR: 2018/02/22 14:51:20 utils.go:33: AppError]: token contains an invalid number of segments
+ERROR: 2018/02/22 14:57:56 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/22 14:59:57 utils.go:33: AppError]: token is expired by 29s
+ERROR: 2018/02/22 15:03:18 utils.go:33: AppError]: token is expired by 3m50s
+ERROR: 2018/02/22 15:04:38 utils.go:33: AppError]: token is expired by 5m10s
+ERROR: 2018/02/22 15:24:49 utils.go:33: AppError]: token is expired by 25m21s
+ERROR: 2018/02/22 15:30:43 utils.go:33: AppError]: token is expired by 10m30s
+ERROR: 2018/02/22 16:44:59 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/22 16:48:59 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/22 16:54:58 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/22 16:55:47 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/22 17:01:53 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/22 17:03:12 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/22 17:21:00 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/22 17:22:08 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/22 17:27:51 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/22 17:28:31 utils.go:33: AppError]: token is expired by 10s
+ERROR: 2018/02/22 17:28:51 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/22 17:29:35 utils.go:33: AppError]: token is expired by 1m14s
+ERROR: 2018/02/22 17:29:52 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/22 17:31:06 utils.go:33: AppError]: token is expired by 2m45s
+ERROR: 2018/02/23 09:50:26 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/23 09:50:33 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/23 09:50:48 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/23 09:52:13 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/23 09:52:20 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/23 09:53:20 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/23 09:53:26 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/23 09:55:48 utils.go:33: AppError]: token is expired by 15h27m11s
+ERROR: 2018/02/23 09:56:06 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 10:38:04 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/23 10:38:10 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/23 10:53:32 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/23 11:13:17 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 11:14:23 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: sign tx failed: cannot sign
+ERROR: 2018/02/23 11:14:57 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: sign tx failed: cannot sign
+ERROR: 2018/02/23 11:15:17 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 11:15:47 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 11:16:43 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 11:16:57 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 11:43:52 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: sign tx failed: cannot sign
+ERROR: 2018/02/23 11:47:56 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 11:48:17 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 11:51:12 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 11:51:45 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 12:58:34 utils.go:33: AppError]: invalid character '"' after object key:value pair
+ERROR: 2018/02/23 12:59:57 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 13:02:42 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 13:04:09 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 13:04:25 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: sign tx failed: cannot sign
+ERROR: 2018/02/23 13:16:28 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 13:16:54 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 13:17:24 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: sign tx failed: cannot sign
+ERROR: 2018/02/23 13:37:56 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: sign tx failed: cannot sign
+ERROR: 2018/02/23 16:14:50 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/23 16:36:31 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/27 15:32:44 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/27 15:36:45 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/27 15:38:11 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/27 16:27:41 utils.go:33: AppError]: get raw bytes failed: mutator:0 failed: hash tx failed: empty network passphrase
+ERROR: 2018/02/27 16:44:58 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
+ERROR: 2018/02/28 16:07:08 utils.go:33: AppError]: token is expired by 14h41m31s
