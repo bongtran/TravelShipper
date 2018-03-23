@@ -7,8 +7,6 @@ func InitRouters() *mux.Router {
 
 	router = SetTestingRouter(router)
 
-	router = SetStellarRouters(router)
-
 	// Routes for the User entity
 	router = SetUserRoutes(router)
 	// Routes for the Bookmark entity
