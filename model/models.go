@@ -45,6 +45,7 @@ type (
 		Name        string        `json:"name"`
 		Description string        `json:"description"`
 		Price       float32       `json:"price"`
+		Quantity    int           `json:"quantity"`
 		ItemUrl     string        `json:"item_url"`
 		Country     string        `json:"country"`
 		Province    string        `json:"province"`
