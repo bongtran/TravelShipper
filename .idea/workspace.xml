@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ce041b5a-9396-4e41-bcab-2ab6a3cef0ec" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/constants/constant.go" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/emails/sendmail.go" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/model/responses.go" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/common/utils.go" afterPath="$PROJECT_DIR$/common/utils.go" />
-      <change beforePath="$PROJECT_DIR$/controllers/resources.go" afterPath="$PROJECT_DIR$/controllers/resources.go" />
-      <change beforePath="$PROJECT_DIR$/controllers/user_controller.go" afterPath="$PROJECT_DIR$/controllers/user_controller.go" />
-      <change beforePath="$PROJECT_DIR$/model/models.go" afterPath="$PROJECT_DIR$/model/models.go" />
-      <change beforePath="$PROJECT_DIR$/store/user_store.go" afterPath="$PROJECT_DIR$/store/user_store.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -363,7 +355,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="2018-03-23&#10;ADD Models" />
-    <option name="LAST_COMMIT_MESSAGE" value="2018-03-23&#10;ADD Models" />
+    <MESSAGE value="2018-03-27&#10;ADD User api" />
+    <option name="LAST_COMMIT_MESSAGE" value="2018-03-27&#10;ADD User api" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
