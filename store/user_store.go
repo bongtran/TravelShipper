@@ -5,6 +5,9 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"TravelShipper/model"
+	"TravelShipper/controllers"
+	"go/constant"
+	"TravelShipper/constants"
 )
 
 // UserStore provides persistence logic for "users" collection.
@@ -13,16 +16,38 @@ type UserStore struct {
 }
 
 // Create insert new User
-func (store UserStore) Create(user model.User, password string) error {
+func (store UserStore) Create(user model.User, password string) (int, error ){
+	var fund model.User
+	err := store.C.Find(bson.M{"email": user.Email}).One(&fund)
+	if err == nil {
+		return 57000, err
+	}
 
 	user.ID = bson.NewObjectId()
 	hpass, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		return err
+		return 56000, err
 	}
 	user.HashPassword = hpass
 	err = store.C.Insert(user)
-	return err
+	return 50000, err
+}
+
+func (store UserStore) Activate(model controllers.ActivateResource) (model.User, error) {
+	var user = model.User{};
+	err := store.C.Update(bson.M{"_id": model.ID},
+	bson.M{"$set": bson.M{"activated": true}})
+	if err != nil{
+		return user, err
+	}
+
+	err = store.C.Find(bson.M{"_id": model.ID}).One(&user)
+
+	if err != nil {
+		return model.User{}, err
+	}
+
+	return user, nil
 }
 
 // Login authenticates the User

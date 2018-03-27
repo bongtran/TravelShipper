@@ -2,13 +2,25 @@ package controllers
 
 import (
 	"TravelShipper/model"
+	"gopkg.in/mgo.v2/bson"
 )
 
 //Models for JSON resources
 type (
 	// UserResource For Post - /user/register
+	RegisterResource struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+
 	UserResource struct {
 		Data UserModel `json:"data"`
+	}
+
+	ActivateResource struct {
+		ID bson.ObjectId `json:"id"`
+		Email string `json:"email"`
+		ActivateCode string `json:"activate_code"`
 	}
 	// AuthUserResource Response for authorized user Post - /user/login
 	AuthUserResource struct {
@@ -46,8 +58,8 @@ type (
 	}
 
 	ResponseModel struct {
-		StatusCode int    `json:"code"`
-		Data       string `json:"d"`
-		Error      string `json:"error"`
+		StatusCode int         `json:"code"`
+		Data       interface{} `json:"d"`
+		Error      string      `json:"error"`
 	}
 )

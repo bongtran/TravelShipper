@@ -13,7 +13,7 @@ import (
 // Handler for HTTP Post - "/users/register"
 func Register(w http.ResponseWriter, r *http.Request) {
 	log.Println("Register")
-	var dataResource UserResource
+	var dataResource RegisterResource
 	// Decode the incoming User json
 	err := json.NewDecoder(r.Body).Decode(&dataResource)
 	if err != nil {
@@ -26,35 +26,53 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Println("email: " + dataResource.Data.Email)
+	log.Println("email: " + dataResource.Email)
 
-	userModel := dataResource.Data
 	dataStore := common.NewDataStore()
 	defer dataStore.Close()
 	col := dataStore.Collection("users")
 	userStore := store.UserStore{C: col}
 	user := model.User{
-		FirstName: userModel.FirstName,
-		LastName:  userModel.LastName,
-		Email:     userModel.Email,
+		Email: dataResource.Email,
 	}
 
 	// Insert User document
-	userStore.Create(user, userModel.Password)
+	code, err := userStore.Create(user, dataResource.Password)
+
+	response := ResponseModel{
+		StatusCode: code,
+	}
+
+	switch code {
+	case 50000:
+		response.Data = "Successful"
+		break
+	case 56000:
+		response.Data = "Existed"
+		response.Error = err.Error()
+		break
+	case 5700:
+		response.Data = "Error"
+		response.Error = err.Error()
+		break
+	}
+
+	data, err := json.Marshal(response)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
+	w.Write(data)
 }
 
 // Login authenticates the HTTP request with username and apssword
 // Handler for HTTP Post - "/users/login"
 func Login(w http.ResponseWriter, r *http.Request) {
 	log.Println("Login")
-	var dataResource UserResource
+	var dataResource RegisterResource
 	var token string
 	// Decode the incoming Login json
 	err := json.NewDecoder(r.Body).Decode(&dataResource)
 	if err != nil {
-		common.DisplayAppError(
+		common.ResponseError(
 			w,
 			err,
 			"Invalid Login data",
@@ -62,19 +80,18 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		)
 		return
 	}
-	loginUser := dataResource.Data
 	dataStore := common.NewDataStore()
 	defer dataStore.Close()
 	col := dataStore.Collection("users")
 	userStore := store.UserStore{C: col}
 	// Authenticate the login user
-	user, err := userStore.Login(loginUser.Email, loginUser.Password)
+	user, err := userStore.Login(dataResource.Email, dataResource.Password)
 	if err != nil {
-		common.DisplayAppError(
+		common.ResponseError(
 			w,
 			err,
 			"Invalid login credentials",
-			401,
+			57001,
 		)
 		return
 	}
@@ -96,7 +113,13 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		User:  user,
 		Token: token,
 	}
-	j, err := json.Marshal(AuthUserResource{Data: authUser})
+
+	data := ResponseModel{
+		StatusCode: 50000,
+		Data:       AuthUserResource{Data: authUser},
+	}
+
+	j, err := json.Marshal(data)
 	if err != nil {
 		common.DisplayAppError(
 			w,

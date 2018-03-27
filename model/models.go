@@ -19,6 +19,8 @@ type (
 		IDCardUrl    string        `json:"id_card_url"`
 		CreatedDate  time.Time     `json:"created_date"`
 		ModifiedDate time.Time     `json:"modified_date"`
+		Activated    bool          `json:"activated"`
+		ActivateCode string        `json:"activate_code"`
 	}
 
 	Device struct {
