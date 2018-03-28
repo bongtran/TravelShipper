@@ -1,7 +1,6 @@
-package controllers
+package model
 
 import (
-	"TravelShipper/model"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -29,19 +28,19 @@ type (
 	// BookmarkResource For Post/Put - /bookmarks
 	// For Get - /bookmarks/id
 	BookmarkResource struct {
-		Data model.Bookmark `json:"data"`
+		Data Bookmark `json:"data"`
 	}
 	// BookmarksResource for Get - /bookmarks
 	BookmarksResource struct {
-		Data []model.Bookmark `json:"data"`
+		Data []Bookmark `json:"data"`
 	}
 
 	TransferResource struct {
-		Data model.TransferModel `json:"data"`
+		Data TransferModel `json:"data"`
 	}
 
 	OfferResource struct {
-		Data model.OfferModel `json:"data"`
+		Data OfferModel `json:"data"`
 	}
 
 	// UserModel reperesents a user
@@ -53,13 +52,9 @@ type (
 	}
 	// AuthUserModel for authorized user with access token
 	AuthUserModel struct {
-		User  model.User `json:"user"`
+		User  User `json:"user"`
 		Token string     `json:"token"`
 	}
 
-	ResponseModel struct {
-		StatusCode int         `json:"code"`
-		Data       interface{} `json:"d"`
-		Error      string      `json:"error"`
-	}
+
 )

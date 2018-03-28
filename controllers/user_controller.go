@@ -7,13 +7,15 @@ import (
 	"TravelShipper/common"
 	"TravelShipper/store"
 	"TravelShipper/model"
+	"TravelShipper/emails"
+	"TravelShipper/utils"
 )
 
 // Register add a new User document
 // Handler for HTTP Post - "/users/register"
 func Register(w http.ResponseWriter, r *http.Request) {
 	log.Println("Register")
-	var dataResource RegisterResource
+	var dataResource model.RegisterResource
 	// Decode the incoming User json
 	err := json.NewDecoder(r.Body).Decode(&dataResource)
 	if err != nil {
@@ -27,6 +29,8 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Println("email: " + dataResource.Email)
+	code := utils.RandStringBytesMaskImprSrc(6)
+	log.Println(code)
 
 	dataStore := common.NewDataStore()
 	defer dataStore.Close()
@@ -37,13 +41,15 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Insert User document
-	code, err := userStore.Create(user, dataResource.Password)
+	statusCode, err := userStore.Create(user, dataResource.Password)
 
-	response := ResponseModel{
-		StatusCode: code,
+	response := model.ResponseModel{
+		StatusCode: statusCode,
 	}
 
-	switch code {
+	emails.SendVerifyEmail(dataResource.Email, code)
+
+	switch statusCode {
 	case 50000:
 		response.Data = "Successful"
 		break
@@ -67,7 +73,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 // Handler for HTTP Post - "/users/login"
 func Login(w http.ResponseWriter, r *http.Request) {
 	log.Println("Login")
-	var dataResource RegisterResource
+	var dataResource model.RegisterResource
 	var token string
 	// Decode the incoming Login json
 	err := json.NewDecoder(r.Body).Decode(&dataResource)
@@ -109,14 +115,14 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	// Clean-up the hashpassword to eliminate it from response JSON
 	user.HashPassword = nil
-	authUser := AuthUserModel{
+	authUser := model.AuthUserModel{
 		User:  user,
 		Token: token,
 	}
 
-	data := ResponseModel{
+	data := model.ResponseModel{
 		StatusCode: 50000,
-		Data:       AuthUserResource{Data: authUser},
+		Data:       model.AuthUserResource{Data: authUser},
 	}
 
 	j, err := json.Marshal(data)

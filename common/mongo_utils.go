@@ -3,7 +3,6 @@ package common
 import (
 	"log"
 	"time"
-
 	"gopkg.in/mgo.v2"
 )
 

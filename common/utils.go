@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"TravelShipper/controllers"
+	"TravelShipper/model"
 )
 
 type (
@@ -40,7 +40,7 @@ func DisplayAppError(w http.ResponseWriter, handlerError error, message string, 
 }
 
 func ResponseError(w http.ResponseWriter, handlerError error, message string, code int) {
-	data := controllers.ResponseModel{
+	data := model.ResponseModel{
 		StatusCode: code,
 		Error:      handlerError.Error(),
 		Data:       message,

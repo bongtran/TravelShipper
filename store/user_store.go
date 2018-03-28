@@ -5,9 +5,6 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"TravelShipper/model"
-	"TravelShipper/controllers"
-	"go/constant"
-	"TravelShipper/constants"
 )
 
 // UserStore provides persistence logic for "users" collection.
@@ -33,9 +30,9 @@ func (store UserStore) Create(user model.User, password string) (int, error ){
 	return 50000, err
 }
 
-func (store UserStore) Activate(model controllers.ActivateResource) (model.User, error) {
-	var user = model.User{};
-	err := store.C.Update(bson.M{"_id": model.ID},
+func (store UserStore) Activate(model model.ActivateResource) (user model.User, err error) {
+	//var user = model.User{};
+	err = store.C.Update(bson.M{"_id": model.ID},
 	bson.M{"$set": bson.M{"activated": true}})
 	if err != nil{
 		return user, err
@@ -44,7 +41,7 @@ func (store UserStore) Activate(model controllers.ActivateResource) (model.User,
 	err = store.C.Find(bson.M{"_id": model.ID}).One(&user)
 
 	if err != nil {
-		return model.User{}, err
+		return user, err
 	}
 
 	return user, nil

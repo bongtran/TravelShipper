@@ -15,7 +15,7 @@ import (
 // CreateBookmark insert a new Bookmark.
 // Handler for HTTP Post - "/bookmarks
 func CreateBookmark(w http.ResponseWriter, r *http.Request) {
-	var dataResource BookmarkResource
+	var dataResource model.BookmarkResource
 	// Decode the incoming Bookmark json
 	err := json.NewDecoder(r.Body).Decode(&dataResource)
 	if err != nil {
@@ -52,7 +52,7 @@ func CreateBookmark(w http.ResponseWriter, r *http.Request) {
 		)
 		return
 	}
-	j, err := json.Marshal(BookmarkResource{Data: *bookmark})
+	j, err := json.Marshal(model.BookmarkResource{Data: *bookmark})
 	// If error is occured,
 	// Send JSON response using helper function common.DisplayAppError
 	if err != nil {
@@ -79,7 +79,7 @@ func GetBookmarks(w http.ResponseWriter, r *http.Request) {
 	col := dataStore.Collection("bookmarks")
 	bookmarkStore := store.BookmarkStore{C: col}
 	bookmarks := bookmarkStore.GetAll()
-	j, err := json.Marshal(BookmarksResource{Data: bookmarks})
+	j, err := json.Marshal(model.BookmarksResource{Data: bookmarks})
 	if err != nil {
 		common.DisplayAppError(
 			w,
@@ -148,7 +148,7 @@ func GetBookmarksByUser(w http.ResponseWriter, r *http.Request) {
 	col := dataStore.Collection("bookmarks")
 	bookmarkStore := store.BookmarkStore{C: col}
 	bookmarks := bookmarkStore.GetByUser(user)
-	j, err := json.Marshal(BookmarksResource{Data: bookmarks})
+	j, err := json.Marshal(model.BookmarksResource{Data: bookmarks})
 	if err != nil {
 		common.DisplayAppError(
 			w,
@@ -169,7 +169,7 @@ func UpdateBookmark(w http.ResponseWriter, r *http.Request) {
 	// Get id from the incoming url
 	vars := mux.Vars(r)
 	id := bson.ObjectIdHex(vars["id"])
-	var dataResource BookmarkResource
+	var dataResource model.BookmarkResource
 	// Decode the incoming Bookmark json
 	err := json.NewDecoder(r.Body).Decode(&dataResource)
 	if err != nil {
