@@ -11,6 +11,7 @@ const (
 	ExitedEmail    StatusCode = 51002
 	NotExitedEmail StatusCode = 51003
 	ActivateFail   StatusCode = 51004
+	NotActivated   StatusCode = 51005
 )
 
 var statusValue = map[StatusCode]int{
@@ -22,6 +23,7 @@ var statusValue = map[StatusCode]int{
 	ExitedEmail:    51002,
 	NotExitedEmail: 51003,
 	ActivateFail:   51004,
+	NotActivated:   51005,
 }
 
 var statusString = map[StatusCode]string{
@@ -33,6 +35,7 @@ var statusString = map[StatusCode]string{
 	ExitedEmail:    "ExitedEmail",
 	NotExitedEmail: "NotExitedEmail",
 	ActivateFail:   "ActivateFail",
+	NotActivated:   "NotActivated",
 }
 
 func (status StatusCode) V() int {

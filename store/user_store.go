@@ -63,6 +63,11 @@ func (store UserStore) Login(email, password string) (model.User, error, constan
 	if err != nil {
 		return model.User{}, err, constants.LoginFail
 	}
+
+	if !user.Activated{
+		return model.User{}, err, constants.NotActivated
+	}
+
 	return user, nil, constants.Successful
 }
 

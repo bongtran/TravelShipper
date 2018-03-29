@@ -179,6 +179,12 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	switch status {
+	case constants.NotActivated:
+		if err != nil {
+			data.Data = constants.NotActivated.T()
+			data.Error = err.Error()
+		}
+		break
 	case constants.LoginFail:
 		if err != nil {
 			data.Error = err.Error()
@@ -198,6 +204,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		}
 		// Clean-up the hashpassword to eliminate it from response JSON
 		user.HashPassword = nil
+		user.ActivateCode = ""
 		authUser := model.AuthUserModel{
 			User:  user,
 			Token: token,
