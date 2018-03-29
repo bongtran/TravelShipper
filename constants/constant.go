@@ -3,12 +3,42 @@ package constants
 type StatusCode int
 
 const (
-	InternalError StatusCode = 500
-	Successful StatusCode = 500000
-	Fail StatusCode = 50001
-	Error StatusCode = 56000
-	Exited StatusCode = 57000
-	LoginFail StatusCode = 57001
+	InternalError  StatusCode = 500
+	Successful     StatusCode = 50000
+	Fail           StatusCode = 51000
+	Error          StatusCode = 56000
+	LoginFail      StatusCode = 51001
+	ExitedEmail    StatusCode = 51002
+	NotExitedEmail StatusCode = 51003
+	ActivateFail   StatusCode = 51004
 )
 
+var statusValue = map[StatusCode]int{
+	InternalError:  500,
+	Successful:     50000,
+	Fail:           51000,
+	Error:          56000,
+	LoginFail:      51001,
+	ExitedEmail:    51002,
+	NotExitedEmail: 51003,
+	ActivateFail:   51004,
+}
 
+var statusString = map[StatusCode]string{
+	InternalError:  "InternalError",
+	Successful:     "Successful",
+	Fail:           "Fail",
+	Error:          "Error",
+	LoginFail:      "LoginFail",
+	ExitedEmail:    "ExitedEmail",
+	NotExitedEmail: "NotExitedEmail",
+	ActivateFail:   "ActivateFail",
+}
+
+func (status StatusCode) V() int {
+	return statusValue[status]
+}
+
+func (status StatusCode) T() string {
+	return statusString[status]
+}

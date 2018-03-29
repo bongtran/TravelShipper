@@ -6,11 +6,12 @@ import (
 )
 
 func SendVerifyEmail(emailAddress string, code string) {
+
 	d := gomail.NewDialer("smtp.gmail.com", 587, "nicetravelshipper@gmail.com", "Nam50tam")
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 
 
-	body := "Dear <b>User</b>, </br> Your verification is: <b>" + code +"</b>";
+	body := "Dear <b>User</b>, </br> Your verification is: <b>" + code +"</b></br>";
 	// Send emails using d.
 	m := gomail.NewMessage()
 	m.SetHeader("From", "info@travelshipper.com")
@@ -22,6 +23,7 @@ func SendVerifyEmail(emailAddress string, code string) {
 
 	// Send the email to Bob, Cora and Dan.
 	if err := d.DialAndSend(m); err != nil {
-		panic(err)
+		//panic(err)
+		println(err.Error())
 	}
 }

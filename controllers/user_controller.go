@@ -9,6 +9,8 @@ import (
 	"TravelShipper/model"
 	"TravelShipper/emails"
 	"TravelShipper/utils"
+	"TravelShipper/constants"
+	"time"
 )
 
 // Register add a new User document
@@ -23,7 +25,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"Invalid User data",
-			500,
+			constants.InternalError.V(),
 		)
 		return
 	}
@@ -37,29 +39,35 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	col := dataStore.Collection("users")
 	userStore := store.UserStore{C: col}
 	user := model.User{
-		Email: dataResource.Email,
+		Email:        dataResource.Email,
+		ActivateCode: code,
+		CreatedDate:  time.Now().UTC(),
+		ModifiedDate: time.Now().UTC(),
 	}
 
 	// Insert User document
 	statusCode, err := userStore.Create(user, dataResource.Password)
 
 	response := model.ResponseModel{
-		StatusCode: statusCode,
+		StatusCode: statusCode.V(),
 	}
 
-	emails.SendVerifyEmail(dataResource.Email, code)
-
 	switch statusCode {
-	case 50000:
+	case constants.Successful:
+		emails.SendVerifyEmail(dataResource.Email, code)
 		response.Data = "Successful"
 		break
-	case 56000:
-		response.Data = "Existed"
-		response.Error = err.Error()
+	case constants.ExitedEmail:
+		response.Data = "Existed Email"
+		if err != nil {
+			response.Error = err.Error()
+		}
 		break
-	case 5700:
+	case constants.Error:
 		response.Data = "Error"
-		response.Error = err.Error()
+		if err != nil {
+			response.Error = err.Error()
+		}
 		break
 	}
 
@@ -67,6 +75,79 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	w.Write(data)
+}
+
+func Activate(w http.ResponseWriter, r *http.Request) {
+	log.Println("Activate")
+	var dataResource model.ActivateResource
+	var token string
+	// Decode the incoming Login json
+	err := json.NewDecoder(r.Body).Decode(&dataResource)
+	if err != nil {
+		common.ResponseError(
+			w,
+			err,
+			"Invalid activate data",
+			constants.InternalError.V(),
+		)
+		return
+	}
+	dataStore := common.NewDataStore()
+	defer dataStore.Close()
+	col := dataStore.Collection("users")
+	userStore := store.UserStore{C: col}
+	// Authenticate the login user
+	user, err, status := userStore.Activate(dataResource)
+	data := model.ResponseModel{
+		StatusCode: status.V(),
+	}
+	switch status {
+	case constants.ActivateFail:
+		if err != nil {
+			data.Error = err.Error()
+		}
+		break
+	case constants.Error:
+		if err != nil {
+			data.Error = err.Error()
+		}
+		break
+	case constants.Successful:
+		token, err = common.GenerateJWT(user.ID, user.Email, "member")
+		if err != nil {
+			common.DisplayAppError(
+				w,
+				err,
+				"Eror while generating the access token",
+				constants.InternalError.V(),
+			)
+			return
+		}
+		// Clean-up the hashpassword to eliminate it from response JSON
+		user.HashPassword = nil
+		authUser := model.AuthUserModel{
+			User:  user,
+			Token: token,
+		}
+		data.Data = authUser
+		break
+	}
+	// Generate JWT token
+
+	w.Header().Set("Content-Type", "application/json")
+
+	j, err := json.Marshal(data)
+	if err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"An unexpected error has occurred",
+			constants.InternalError.V(),
+		)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Write(j)
 }
 
 // Login authenticates the HTTP request with username and apssword
@@ -82,7 +163,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"Invalid Login data",
-			500,
+			constants.InternalError.V(),
 		)
 		return
 	}
@@ -91,39 +172,41 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	col := dataStore.Collection("users")
 	userStore := store.UserStore{C: col}
 	// Authenticate the login user
-	user, err := userStore.Login(dataResource.Email, dataResource.Password)
-	if err != nil {
-		common.ResponseError(
-			w,
-			err,
-			"Invalid login credentials",
-			57001,
-		)
-		return
-	}
-	// Generate JWT token
-	token, err = common.GenerateJWT(user.ID, user.Email, "member")
-	if err != nil {
-		common.DisplayAppError(
-			w,
-			err,
-			"Eror while generating the access token",
-			500,
-		)
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	// Clean-up the hashpassword to eliminate it from response JSON
-	user.HashPassword = nil
-	authUser := model.AuthUserModel{
-		User:  user,
-		Token: token,
-	}
+	user, err, status := userStore.Login(dataResource.Email, dataResource.Password)
 
 	data := model.ResponseModel{
-		StatusCode: 50000,
-		Data:       model.AuthUserResource{Data: authUser},
+		StatusCode: status.V(),
 	}
+
+	switch status {
+	case constants.LoginFail:
+		if err != nil {
+			data.Error = err.Error()
+		}
+		break
+	case constants.Successful:
+		// Generate JWT token
+		token, err = common.GenerateJWT(user.ID, user.Email, "member")
+		if err != nil {
+			common.DisplayAppError(
+				w,
+				err,
+				"Eror while generating the access token",
+				constants.InternalError.V(),
+			)
+			return
+		}
+		// Clean-up the hashpassword to eliminate it from response JSON
+		user.HashPassword = nil
+		authUser := model.AuthUserModel{
+			User:  user,
+			Token: token,
+		}
+		data.Data = authUser
+		break
+	}
+
+	w.Header().Set("Content-Type", "application/json")
 
 	j, err := json.Marshal(data)
 	if err != nil {
@@ -131,7 +214,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"An unexpected error has occurred",
-			500,
+			constants.InternalError.V(),
 		)
 		return
 	}

@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"TravelShipper/model"
+	"TravelShipper/constants"
 )
 
 type (
@@ -52,7 +53,7 @@ func ResponseError(w http.ResponseWriter, handlerError error, message string, co
 			w,
 			err,
 			"An unexpected error has occurred",
-			500,
+			constants.InternalError.V(),
 		)
 		return
 	}
