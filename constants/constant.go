@@ -3,39 +3,42 @@ package constants
 type StatusCode int
 
 const (
-	InternalError  StatusCode = 500
-	Successful     StatusCode = 50000
-	Fail           StatusCode = 51000
-	Error          StatusCode = 56000
-	LoginFail      StatusCode = 51001
-	ExitedEmail    StatusCode = 51002
-	NotExitedEmail StatusCode = 51003
-	ActivateFail   StatusCode = 51004
-	NotActivated   StatusCode = 51005
+	InternalError     StatusCode = 500
+	Successful        StatusCode = 50000
+	Fail              StatusCode = 51000
+	Error             StatusCode = 56000
+	LoginFail         StatusCode = 51001
+	ExitedEmail       StatusCode = 51002
+	NotExitedEmail    StatusCode = 51003
+	ActivateFail      StatusCode = 51004
+	NotActivated      StatusCode = 51005
+	ResetPasswordFail StatusCode = 51006
 )
 
 var statusValue = map[StatusCode]int{
-	InternalError:  500,
-	Successful:     50000,
-	Fail:           51000,
-	Error:          56000,
-	LoginFail:      51001,
-	ExitedEmail:    51002,
-	NotExitedEmail: 51003,
-	ActivateFail:   51004,
-	NotActivated:   51005,
+	InternalError:     500,
+	Successful:        50000,
+	Fail:              51000,
+	Error:             56000,
+	LoginFail:         51001,
+	ExitedEmail:       51002,
+	NotExitedEmail:    51003,
+	ActivateFail:      51004,
+	NotActivated:      51005,
+	ResetPasswordFail: 51006,
 }
 
 var statusString = map[StatusCode]string{
-	InternalError:  "InternalError",
-	Successful:     "Successful",
-	Fail:           "Fail",
-	Error:          "Error",
-	LoginFail:      "LoginFail",
-	ExitedEmail:    "ExitedEmail",
-	NotExitedEmail: "NotExitedEmail",
-	ActivateFail:   "ActivateFail",
-	NotActivated:   "NotActivated",
+	InternalError:     "InternalError",
+	Successful:        "Successful",
+	Fail:              "Fail",
+	Error:             "Error",
+	LoginFail:         "LoginFail",
+	ExitedEmail:       "ExitedEmail",
+	NotExitedEmail:    "NotExitedEmail",
+	ActivateFail:      "ActivateFail",
+	NotActivated:      "NotActivated",
+	ResetPasswordFail: "ResetPasswordFail",
 }
 
 func (status StatusCode) V() int {

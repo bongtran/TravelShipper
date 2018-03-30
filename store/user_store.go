@@ -64,19 +64,72 @@ func (store UserStore) Login(email, password string) (model.User, error, constan
 		return model.User{}, err, constants.LoginFail
 	}
 
-	if !user.Activated{
+	if !user.Activated {
 		return model.User{}, err, constants.NotActivated
 	}
 
 	return user, nil, constants.Successful
 }
 
-func (store UserStore) GetUser(email, password string) (model.User, error) {
+func (store UserStore) UpdateUser(user model.User) (error, constants.StatusCode) {
+	err := store.C.Update(bson.M{"_id": user.ID},
+		bson.M{"$set": bson.M{"firstname": user.FirstName,
+			"lastname": user.LastName,
+			"description": user.Description,
+			"myurl": user.MyUrl,
+			//"avatar": user.FirstName,
+			//"idcardurl": user.FirstName,
+			//"firstname": user.FirstName,
+			"modifieddate": time.Now().UTC()}})
+	if err != nil {
+		return err, constants.Fail
+	}
+
+	return nil, constants.Successful
+}
+
+func (store UserStore) GetUser(id string) (model.User, error, constants.StatusCode) {
+	var user model.User
+	err := store.C.FindId(bson.ObjectIdHex(id)).One(&user)
+	if err != nil {
+		return model.User{}, err, constants.Fail
+	}
+
+	return user, nil, constants.Successful
+}
+
+func (store UserStore) GetActivateCode(email string) (string, error, constants.StatusCode) {
 	var user model.User
 	err := store.C.Find(bson.M{"email": email}).One(&user)
 	if err != nil {
-		return model.User{}, err
+		return "", err, constants.NotExitedEmail
 	}
 
-	return user, nil
+	return user.ActivateCode, nil, constants.Successful
+}
+
+func (store UserStore) RequestResetPassord(email string, code string) (error, constants.StatusCode) {
+	err := store.C.Update(bson.M{"email": email},
+		bson.M{"$set": bson.M{"activatecode": code, "modifieddate": time.Now().UTC()}})
+	if err != nil {
+		return err, constants.NotExitedEmail
+	}
+
+	return nil, constants.Successful
+}
+
+func (store UserStore) ResetPassword(email string, password string, code string) (model.User, error, constants.StatusCode) {
+	err := store.C.Update(bson.M{"email": email, "activatecode": code},
+		bson.M{"$set": bson.M{"hashpassword": password, "modifieddate": time.Now().UTC()}})
+	if err != nil {
+		return model.User{}, err, constants.ResetPasswordFail
+	}
+
+	var user model.User
+	err = store.C.Find(bson.M{"email": email}).One(&user)
+	if err != nil {
+		return model.User{}, err, constants.NotExitedEmail
+	}
+
+	return user, nil, constants.Successful
 }

@@ -12,6 +12,12 @@ type (
 		Password string `json:"password"`
 	}
 
+	ResetPasswordResource struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+		ActivateCode string `json:"activate_code"`
+	}
+
 	UserResource struct {
 		Data UserModel `json:"data"`
 	}

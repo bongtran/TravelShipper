@@ -11,6 +11,7 @@ import (
 	"TravelShipper/utils"
 	"TravelShipper/constants"
 	"time"
+	"github.com/gorilla/mux"
 )
 
 // Register add a new User document
@@ -43,6 +44,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		ActivateCode: code,
 		CreatedDate:  time.Now().UTC(),
 		ModifiedDate: time.Now().UTC(),
+		Role:         "member",
 	}
 
 	// Insert User document
@@ -171,8 +173,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	defer dataStore.Close()
 	col := dataStore.Collection("users")
 	userStore := store.UserStore{C: col}
-	// Authenticate the login user
-	user, err, status := userStore.Login(dataResource.Email, dataResource.Password)
+	// Authenticate the login result
+	result, err, status := userStore.Login(dataResource.Email, dataResource.Password)
 
 	data := model.ResponseModel{
 		StatusCode: status.V(),
@@ -192,7 +194,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		break
 	case constants.Successful:
 		// Generate JWT token
-		token, err = common.GenerateJWT(user.ID, user.Email, "member")
+		token, err = common.GenerateJWT(result.ID, result.Email, "member")
 		if err != nil {
 			common.DisplayAppError(
 				w,
@@ -203,13 +205,314 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		// Clean-up the hashpassword to eliminate it from response JSON
-		user.HashPassword = nil
-		user.ActivateCode = ""
+		result.HashPassword = nil
+		result.ActivateCode = ""
 		authUser := model.AuthUserModel{
-			User:  user,
+			User:  result,
 			Token: token,
 		}
 		data.Data = authUser
+		break
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+
+	j, err := json.Marshal(data)
+	if err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"An unexpected error has occurred",
+			constants.InternalError.V(),
+		)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Write(j)
+}
+
+func GetMyProfile(w http.ResponseWriter, r *http.Request) {
+	session := r.Context().Value("user")
+	if session == nil {
+		common.ResponseErrorString(
+			w,
+			constants.InternalError.T(),
+			"Invalid Token Data",
+			constants.InternalError.V(),
+		)
+		return
+	}
+	dataStore := common.NewDataStore()
+	defer dataStore.Close()
+	col := dataStore.Collection("users")
+	userStore := store.UserStore{C: col}
+
+	//log.Println(session.(model.User).ID.String())
+	// Authenticate the login result
+	result, err, status := userStore.GetUser(session.(model.User).ID.Hex())
+
+	data := model.ResponseModel{
+		StatusCode: status.V(),
+	}
+
+	switch status {
+	case constants.Fail:
+		data.Data = constants.Fail.T()
+		if err != nil {
+			data.Error = err.Error()
+		}
+		break
+	case constants.Successful:
+		result.HashPassword = nil
+		result.ActivateCode = ""
+		data.Data = result
+		break
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+
+	j, err := json.Marshal(data)
+	if err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"An unexpected error has occurred",
+			constants.InternalError.V(),
+		)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Write(j)
+}
+
+func UpdateProfile(w http.ResponseWriter, r *http.Request) {
+	log.Println("Profile")
+	var dataResource model.User
+	// Decode the incoming Login json
+	err := json.NewDecoder(r.Body).Decode(&dataResource)
+	if err != nil {
+		common.ResponseError(
+			w,
+			err,
+			"Invalid Login data",
+			constants.InternalError.V(),
+		)
+		return
+	}
+	dataStore := common.NewDataStore()
+	defer dataStore.Close()
+	col := dataStore.Collection("users")
+	userStore := store.UserStore{C: col}
+	// Authenticate the login user
+	err, status := userStore.UpdateUser(dataResource)
+
+	data := model.ResponseModel{
+		StatusCode: status.V(),
+	}
+
+	switch status {
+	case constants.Fail:
+		data.Data = constants.Fail.T()
+		if err != nil {
+			data.Error = err.Error()
+		}
+		break
+	case constants.Successful:
+		data.Data = constants.Successful.T()
+		break
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+
+	j, err := json.Marshal(data)
+	if err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"An unexpected error has occurred",
+			constants.InternalError.V(),
+		)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Write(j)
+}
+
+func ResendActivateCode(w http.ResponseWriter, r *http.Request) {
+	log.Println("Resend")
+	var dataResource model.RegisterResource
+	// Decode the incoming User json
+	err := json.NewDecoder(r.Body).Decode(&dataResource)
+	if err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"Invalid User data",
+			constants.InternalError.V(),
+		)
+		return
+	}
+
+	dataStore := common.NewDataStore()
+	defer dataStore.Close()
+	col := dataStore.Collection("users")
+	userStore := store.UserStore{C: col}
+
+	// Insert User document
+	activateCode, err, statusCode := userStore.GetActivateCode(dataResource.Email)
+
+	response := model.ResponseModel{
+		StatusCode: statusCode.V(),
+	}
+
+	switch statusCode {
+	case constants.Successful:
+		emails.SendVerifyEmail(dataResource.Email, activateCode)
+		response.Data = "Successful"
+		break
+	case constants.NotExitedEmail:
+		response.Data = "Error"
+		if err != nil {
+			response.Error = err.Error()
+		}
+		break
+	}
+
+	data, err := json.Marshal(response)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	w.Write(data)
+}
+
+func RequestResetPassword(w http.ResponseWriter, r *http.Request) {
+	log.Println("RequestResetPassword")
+	var dataResource model.RegisterResource
+	// Decode the incoming User json
+	err := json.NewDecoder(r.Body).Decode(&dataResource)
+	if err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"Invalid User data",
+			constants.InternalError.V(),
+		)
+		return
+	}
+
+	log.Println("email: " + dataResource.Email)
+	code := utils.RandStringBytesMaskImprSrc(6)
+	log.Println(code)
+
+	dataStore := common.NewDataStore()
+	defer dataStore.Close()
+	col := dataStore.Collection("users")
+	userStore := store.UserStore{C: col}
+
+	// Insert User document
+	err, statusCode := userStore.RequestResetPassord(dataResource.Email, code)
+
+	response := model.ResponseModel{
+		StatusCode: statusCode.V(),
+	}
+
+	switch statusCode {
+	case constants.Successful:
+		emails.SendVerifyEmail(dataResource.Email, code)
+		response.Data = "Successful"
+		break
+	case constants.NotExitedEmail:
+		response.Data = "Not Existed Email"
+		if err != nil {
+			response.Error = err.Error()
+		}
+		break
+	}
+
+	data, err := json.Marshal(response)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	w.Write(data)
+}
+
+func ResetPassword(w http.ResponseWriter, r *http.Request) {
+	log.Println("Reset")
+	var dataResource model.ResetPasswordResource
+	// Decode the incoming User json
+	err := json.NewDecoder(r.Body).Decode(&dataResource)
+	if err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"Invalid User data",
+			constants.InternalError.V(),
+		)
+		return
+	}
+
+	dataStore := common.NewDataStore()
+	defer dataStore.Close()
+	col := dataStore.Collection("users")
+	userStore := store.UserStore{C: col}
+
+	// Insert User document
+	user, err, statusCode := userStore.ResetPassword(dataResource.Email, dataResource.Password, dataResource.ActivateCode)
+
+	response := model.ResponseModel{
+		StatusCode: statusCode.V(),
+	}
+
+	switch statusCode {
+	case constants.Successful:
+		user.HashPassword = nil
+		user.ActivateCode = ""
+		response.Data = user
+		break
+	case constants.NotExitedEmail:
+		response.Data = "Not Existed Email"
+		if err != nil {
+			response.Error = err.Error()
+		}
+		break
+	case constants.ResetPasswordFail:
+		response.Data = constants.ResetPasswordFail.T()
+		if err != nil {
+			response.Error = err.Error()
+		}
+		break
+	}
+
+	data, err := json.Marshal(response)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	w.Write(data)
+}
+
+func GetUser(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	dataStore := common.NewDataStore()
+	defer dataStore.Close()
+	col := dataStore.Collection("users")
+	userStore := store.UserStore{C: col}
+	// Authenticate the login result
+	result, err, status := userStore.GetUser(id)
+
+	data := model.ResponseModel{
+		StatusCode: status.V(),
+	}
+
+	switch status {
+	case constants.Fail:
+		data.Data = constants.Fail.T()
+		if err != nil {
+			data.Error = err.Error()
+		}
+		break
+	case constants.Successful:
+		result.HashPassword = nil
+		result.ActivateCode = ""
+		data.Data = result
 		break
 	}
 

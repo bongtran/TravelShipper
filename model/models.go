@@ -21,6 +21,7 @@ type (
 		ModifiedDate time.Time     `json:"modified_date"`
 		Activated    bool          `json:"activated"`
 		ActivateCode string        `json:"activate_code"`
+		Role         string        `json:"role"`
 	}
 
 	Device struct {
