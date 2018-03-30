@@ -54,6 +54,8 @@ type (
 		Province    string        `json:"province"`
 		Latitude    float32       `json:"latitude"`
 		Longitude   float32       `json:"longitude"`
+		CreatedDate time.Time     `json:"created_date"`
+
 	}
 
 	ShipperResponse struct {
