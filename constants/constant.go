@@ -13,6 +13,9 @@ const (
 	ActivateFail      StatusCode = 51004
 	NotActivated      StatusCode = 51005
 	ResetPasswordFail StatusCode = 51006
+	SetLocationFail   StatusCode = 51007
+	InsertItemFail    StatusCode = 51008
+	GetItemDetailFail StatusCode = 51009
 )
 
 var statusValue = map[StatusCode]int{
@@ -26,6 +29,9 @@ var statusValue = map[StatusCode]int{
 	ActivateFail:      51004,
 	NotActivated:      51005,
 	ResetPasswordFail: 51006,
+	SetLocationFail:   51007,
+	InsertItemFail:    51008,
+	GetItemDetailFail: 51009,
 }
 
 var statusString = map[StatusCode]string{
@@ -39,6 +45,9 @@ var statusString = map[StatusCode]string{
 	ActivateFail:      "ActivateFail",
 	NotActivated:      "NotActivated",
 	ResetPasswordFail: "ResetPasswordFail",
+	SetLocationFail:   "SetLocationFail",
+	InsertItemFail:    "InsertItemFail",
+	GetItemDetailFail: "GetItemDetailFail",
 }
 
 func (status StatusCode) V() int {
