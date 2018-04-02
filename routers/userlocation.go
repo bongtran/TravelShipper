@@ -7,10 +7,10 @@ import (
 )
 
 func SetLocationRoutes(router *mux.Router) *mux.Router {
-	userRouter := mux.NewRouter()
-	userRouter.HandleFunc("/locations/myprofile", controllers.GetMyProfile).Methods("GET")
-	userRouter.HandleFunc("/locations/updateprofile", controllers.UpdateProfile).Methods("POST")
-	userRouter.HandleFunc("/users/{id}", controllers.GetUser).Methods("GET")
-	router.PathPrefix("/users").Handler(common.AuthorizeRequest(userRouter))
+	locationRouter := mux.NewRouter()
+	locationRouter.HandleFunc("/locations/mylocation", controllers.GetMyLocation).Methods("GET")
+	locationRouter.HandleFunc("/locations/mylocation", controllers.SetLocation).Methods("POST")
+	//locationRouter.HandleFunc("/users/{id}", controllers.GetUser).Methods("GET")
+	router.PathPrefix("/locations").Handler(common.AuthorizeRequest(locationRouter))
 	return router
 }

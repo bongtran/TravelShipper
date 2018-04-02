@@ -120,17 +120,18 @@ func (store UserStore) RequestResetPassord(email string, code string) (error, co
 }
 
 func (store UserStore) ResetPassword(email string, password string, code string) (model.User, error, constants.StatusCode) {
-	err := store.C.Update(bson.M{"email": email, "activatecode": code},
-		bson.M{"$set": bson.M{"hashpassword": password, "modifieddate": time.Now().UTC()}})
-	if err != nil {
-		return model.User{}, err, constants.ResetPasswordFail
-	}
+
 
 	var user model.User
-	err = store.C.Find(bson.M{"email": email}).One(&user)
+	err := store.C.Find(bson.M{"email": email}).One(&user)
 	if err != nil {
 		return model.User{}, err, constants.NotExitedEmail
 	}
 
+	err = store.C.Update(bson.M{"email": email, "activatecode": code},
+		bson.M{"$set": bson.M{"hashpassword": password, "modifieddate": time.Now().UTC()}})
+	if err != nil {
+		return model.User{}, err, constants.ResetPasswordFail
+	}
 	return user, nil, constants.Successful
 }
