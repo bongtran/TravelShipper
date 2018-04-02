@@ -391,7 +391,7 @@ func ResendActivateCode(w http.ResponseWriter, r *http.Request) {
 
 	data, err := json.Marshal(response)
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 	w.Write(data)
 }
 

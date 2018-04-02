@@ -74,11 +74,11 @@ func (store UserStore) Login(email, password string) (model.User, error, constan
 func (store UserStore) UpdateUser(user model.User) (error, constants.StatusCode) {
 	err := store.C.Update(bson.M{"_id": user.ID},
 		bson.M{"$set": bson.M{
-			"firstname": user.FirstName,
-			"lastname": user.LastName,
+			"firstname":   user.FirstName,
+			"lastname":    user.LastName,
 			"description": user.Description,
-			"myurl": user.MyUrl,
-			//"avatar": user.FirstName,
+			"myurl":       user.MyUrl,
+			"phone_number": user.PhoneNumber,
 			//"idcardurl": user.FirstName,
 			//"firstname": user.FirstName,
 			"modifieddate": time.Now().UTC()}})
@@ -120,8 +120,6 @@ func (store UserStore) RequestResetPassord(email string, code string) (error, co
 }
 
 func (store UserStore) ResetPassword(email string, password string, code string) (model.User, error, constants.StatusCode) {
-
-
 	var user model.User
 	err := store.C.Find(bson.M{"email": email}).One(&user)
 	if err != nil {

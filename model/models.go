@@ -22,6 +22,7 @@ type (
 		Activated    bool          `json:"activated"`
 		ActivateCode string        `json:"activate_code"`
 		Role         string        `json:"role"`
+		PhoneNumber  string        `json:"phone_number"`
 		//Locations    []Location    `json:"locations"`
 	}
 
@@ -38,6 +39,8 @@ type (
 		UserID          bson.ObjectId `json:"user_id"`
 		Country         string        `json:"country"`
 		Province        string        `json:"province"`
+		District        string        `json:"district"`
+		Address         string        `json:"address"`
 		Latitude        float32       `json:"latitude"`
 		Longitude       float32       `json:"longitude"`
 		Hometown        bool          `json:"hometown"`
@@ -115,7 +118,6 @@ type (
 	}
 
 	OfferSearch struct {
-
 	}
 
 	Bookmark struct {
