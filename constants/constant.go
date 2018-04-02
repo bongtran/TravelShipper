@@ -17,8 +17,10 @@ const (
 	InsertItemFail    StatusCode = 51008
 	GetItemDetailFail StatusCode = 51009
 	GetLocationFail   StatusCode = 51010
-	EditItemFail StatusCode = 510011
-	DeleteItemFail StatusCode = 510012
+	EditItemFail      StatusCode = 51011
+	DeleteItemFail    StatusCode = 51012
+	UpdateProfileFail StatusCode = 51013
+	GetProfileFail    StatusCode = 51014
 )
 
 var statusValue = map[StatusCode]int{
@@ -36,8 +38,10 @@ var statusValue = map[StatusCode]int{
 	InsertItemFail:    51008,
 	GetItemDetailFail: 51009,
 	GetLocationFail:   51010,
-	EditItemFail : 510011,
-	DeleteItemFail : 510012,
+	EditItemFail:      51011,
+	DeleteItemFail:    51012,
+	UpdateProfileFail: 51013,
+	GetProfileFail:    51014,
 }
 
 var statusString = map[StatusCode]string{
@@ -55,8 +59,10 @@ var statusString = map[StatusCode]string{
 	InsertItemFail:    "InsertItemFail",
 	GetItemDetailFail: "GetItemDetailFail",
 	GetLocationFail:   "GetLocationFail",
-	EditItemFail : "EditItemFail",
-	DeleteItemFail : "DeleteItemFail",
+	EditItemFail:      "EditItemFail",
+	DeleteItemFail:    "DeleteItemFail",
+	UpdateProfileFail: "UpdateProfileFail",
+	GetProfileFail:    "GetProfileFail",
 }
 
 func (status StatusCode) V() int {

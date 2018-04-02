@@ -42,6 +42,7 @@ func (store ItemStore) EditItem(item model.Item) (error, constants.StatusCode) {
 	return nil, constants.Successful
 }
 
+
 func (store ItemStore) DeleteItem(id string) (error, constants.StatusCode) {
 	err := store.C.Update(bson.M{"_id": bson.ObjectIdHex(id)},
 		bson.M{"$set": bson.M{"item_status": 0}})

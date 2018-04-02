@@ -190,6 +190,13 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		//	data.Error = err.Error()
 		//}
 		break
+	case constants.NotExitedEmail:
+		data.Error = status.T()
+		//if err != nil {
+		//	data.Data = constants.NotActivated.T()
+		//	data.Error = err.Error()
+		//}
+		break
 	case constants.LoginFail:
 		data.Error = status.T()
 		//if err != nil {
@@ -322,7 +329,7 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 		//}
 		break
 	case constants.Successful:
-		data.Data = constants.Successful.T()
+		data.Data = ""
 		break
 	}
 
@@ -372,7 +379,7 @@ func ResendActivateCode(w http.ResponseWriter, r *http.Request) {
 	switch statusCode {
 	case constants.Successful:
 		emails.SendVerifyEmail(dataResource.Email, activateCode)
-		response.Data = "Successful"
+		response.Data = ""
 		break
 	case constants.NotExitedEmail:
 		response.Error = statusCode.T()
@@ -422,7 +429,7 @@ func RequestResetPassword(w http.ResponseWriter, r *http.Request) {
 	switch statusCode {
 	case constants.Successful:
 		emails.SendVerifyEmail(dataResource.Email, code)
-		response.Data = "Successful"
+		response.Data = ""
 		break
 	case constants.NotExitedEmail:
 		response.Error = statusCode.T()
@@ -502,7 +509,7 @@ func ResetPassword(w http.ResponseWriter, r *http.Request) {
 
 	data, err := json.Marshal(response)
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 	w.Write(data)
 }
 

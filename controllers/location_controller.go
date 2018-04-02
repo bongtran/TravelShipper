@@ -44,7 +44,7 @@ func SetLocation(w http.ResponseWriter, r *http.Request) {
 		//}
 		break
 	case constants.Successful:
-		data.Data = status.T()
+		data.Data = ""
 		break
 	}
 

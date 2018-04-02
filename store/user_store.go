@@ -56,7 +56,7 @@ func (store UserStore) Login(email, password string) (model.User, error, constan
 	var user model.User
 	err := store.C.Find(bson.M{"email": email}).One(&user)
 	if err != nil {
-		return model.User{}, err, constants.LoginFail
+		return model.User{}, err, constants.NotExitedEmail
 	}
 	// Validate password
 	err = bcrypt.CompareHashAndPassword(user.HashPassword, []byte(password))
@@ -73,7 +73,8 @@ func (store UserStore) Login(email, password string) (model.User, error, constan
 
 func (store UserStore) UpdateUser(user model.User) (error, constants.StatusCode) {
 	err := store.C.Update(bson.M{"_id": user.ID},
-		bson.M{"$set": bson.M{"firstname": user.FirstName,
+		bson.M{"$set": bson.M{
+			"firstname": user.FirstName,
 			"lastname": user.LastName,
 			"description": user.Description,
 			"myurl": user.MyUrl,
@@ -82,7 +83,7 @@ func (store UserStore) UpdateUser(user model.User) (error, constants.StatusCode)
 			//"firstname": user.FirstName,
 			"modifieddate": time.Now().UTC()}})
 	if err != nil {
-		return err, constants.Fail
+		return err, constants.UpdateProfileFail
 	}
 
 	return nil, constants.Successful
