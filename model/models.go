@@ -114,6 +114,10 @@ type (
 		Value     int           `json:"value"`
 	}
 
+	OfferSearch struct {
+
+	}
+
 	Bookmark struct {
 		ID          bson.ObjectId `bson:"_id,omitempty"`
 		Name        string        `json:"name"`
