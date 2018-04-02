@@ -3,14 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ce041b5a-9396-4e41-bcab-2ab6a3cef0ec" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/common/utils.go" afterPath="$PROJECT_DIR$/common/utils.go" />
-      <change beforePath="$PROJECT_DIR$/constants/constant.go" afterPath="$PROJECT_DIR$/constants/constant.go" />
-      <change beforePath="$PROJECT_DIR$/controllers/location_controller.go" afterPath="$PROJECT_DIR$/controllers/location_controller.go" />
       <change beforePath="$PROJECT_DIR$/controllers/user_controller.go" afterPath="$PROJECT_DIR$/controllers/user_controller.go" />
-      <change beforePath="$PROJECT_DIR$/emails/sendmail.go" afterPath="$PROJECT_DIR$/emails/sendmail.go" />
-      <change beforePath="$PROJECT_DIR$/model/models.go" afterPath="$PROJECT_DIR$/model/models.go" />
-      <change beforePath="$PROJECT_DIR$/store/item_store.go" afterPath="$PROJECT_DIR$/store/item_store.go" />
-      <change beforePath="$PROJECT_DIR$/store/location_store.go" afterPath="$PROJECT_DIR$/store/location_store.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="item_store.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="item_store.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/store/item_store.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="48" column="7" lean-forward="false" selection-start-line="48" selection-start-column="7" selection-end-line="48" selection-end-column="7" />
+            <state relative-caret-position="867">
+              <caret line="51" column="25" lean-forward="true" selection-start-line="51" selection-start-column="25" selection-end-line="51" selection-end-column="25" />
               <folding>
                 <element signature="e#15#118#0" expanded="true" />
               </folding>
@@ -36,7 +29,7 @@
       <file leaf-file-name="location_store.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/store/location_store.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
+            <state relative-caret-position="340">
               <caret line="31" column="63" lean-forward="false" selection-start-line="31" selection-start-column="63" selection-end-line="31" selection-end-column="63" />
               <folding />
             </state>
@@ -85,12 +78,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user_controller.go" pinned="false" current-in-tab="false">
+      <file leaf-file-name="user_controller.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/user_controller.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="635">
-              <caret line="510" column="31" lean-forward="true" selection-start-line="510" selection-start-column="8" selection-end-line="510" selection-end-column="31" />
-              <folding />
+            <state relative-caret-position="-742">
+              <caret line="486" column="16" lean-forward="false" selection-start-line="486" selection-start-column="16" selection-end-line="486" selection-end-column="16" />
+              <folding>
+                <element signature="n#!!block;n#GetMyProfile#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -185,9 +180,9 @@
         <option value="$PROJECT_DIR$/model/models.go" />
         <option value="$PROJECT_DIR$/emails/sendmail.go" />
         <option value="$PROJECT_DIR$/constants/constant.go" />
+        <option value="$PROJECT_DIR$/controllers/location_controller.go" />
         <option value="$PROJECT_DIR$/store/item_store.go" />
         <option value="$PROJECT_DIR$/controllers/user_controller.go" />
-        <option value="$PROJECT_DIR$/controllers/location_controller.go" />
       </list>
     </option>
   </component>
@@ -409,7 +404,8 @@
     <MESSAGE value="2018-03-29&#10;Update and tested  User api" />
     <MESSAGE value="2018-03-30&#10;Update and tested  User api" />
     <MESSAGE value="2018-03-30&#10;Add item store func" />
-    <option name="LAST_COMMIT_MESSAGE" value="2018-03-30&#10;Add item store func" />
+    <MESSAGE value="2018-04-02&#10;Update response" />
+    <option name="LAST_COMMIT_MESSAGE" value="2018-04-02&#10;Update response" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -717,14 +713,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/user_controller.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="635">
-          <caret line="510" column="31" lean-forward="true" selection-start-line="510" selection-start-column="8" selection-end-line="510" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/location_controller.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1666">
@@ -735,20 +723,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/store/item_store.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="867">
+          <caret line="51" column="25" lean-forward="true" selection-start-line="51" selection-start-column="25" selection-end-line="51" selection-end-column="25" />
+          <folding>
+            <element signature="e#15#118#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/store/location_store.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
+        <state relative-caret-position="340">
           <caret line="31" column="63" lean-forward="false" selection-start-line="31" selection-start-column="63" selection-end-line="31" selection-end-column="63" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/store/item_store.go">
+    <entry file="file://$PROJECT_DIR$/controllers/user_controller.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="48" column="7" lean-forward="false" selection-start-line="48" selection-start-column="7" selection-end-line="48" selection-end-column="7" />
+        <state relative-caret-position="-742">
+          <caret line="486" column="16" lean-forward="false" selection-start-line="486" selection-start-column="16" selection-end-line="486" selection-end-column="16" />
           <folding>
-            <element signature="e#15#118#0" expanded="true" />
+            <element signature="n#!!block;n#GetMyProfile#0" expanded="false" />
           </folding>
         </state>
       </provider>

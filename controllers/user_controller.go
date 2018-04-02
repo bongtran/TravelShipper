@@ -467,9 +467,24 @@ func ResetPassword(w http.ResponseWriter, r *http.Request) {
 
 	switch statusCode {
 	case constants.Successful:
+		token, err := common.GenerateJWT(user.ID, user.Email, "member")
+		if err != nil {
+			common.DisplayAppError(
+				w,
+				err,
+				"Eror while generating the access token",
+				constants.InternalError.V(),
+			)
+			return
+		}
+		// Clean-up the hashpassword to eliminate it from response JSON
 		user.HashPassword = nil
 		user.ActivateCode = ""
-		response.Data = user
+		authUser := model.AuthUserModel{
+			User:  user,
+			Token: token,
+		}
+		response.Data = authUser
 		break
 	case constants.NotExitedEmail:
 		response.Error = statusCode.T()
