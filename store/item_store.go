@@ -6,7 +6,6 @@ import (
 	"TravelShipper/constants"
 	"gopkg.in/mgo.v2/bson"
 	"time"
-	"os/user"
 )
 
 type ItemStore struct {
