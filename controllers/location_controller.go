@@ -37,13 +37,14 @@ func SetLocation(w http.ResponseWriter, r *http.Request) {
 
 	switch status {
 	case constants.SetLocationFail:
-		if err != nil {
-			data.Data = constants.SetLocationFail.T()
-			data.Error = err.Error()
-		}
+		data.Error = status.T()
+		//if err != nil {
+		//	data.Data = constants.SetLocationFail.T()
+		//	data.Error = err.Error()
+		//}
 		break
 	case constants.Successful:
-		data.Data = constants.Successful.T()
+		data.Data = status.T()
 		break
 	}
 
@@ -88,10 +89,11 @@ func GetMyLocation(w http.ResponseWriter, r *http.Request) {
 
 	switch status {
 	case constants.Fail:
-		if err != nil {
-			data.Data = constants.SetLocationFail.T()
-			data.Error = err.Error()
-		}
+		data.Error = status.T()
+		//if err != nil {
+		//	data.Data = constants.SetLocationFail.T()
+		//	data.Error = err.Error()
+		//}
 		break
 	case constants.Successful:
 		data.Data = location

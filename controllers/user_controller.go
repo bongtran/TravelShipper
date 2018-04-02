@@ -57,19 +57,19 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	switch statusCode {
 	case constants.Successful:
 		emails.SendVerifyEmail(dataResource.Email, code)
-		response.Data = "Successful"
+		response.Data = ""
 		break
 	case constants.ExitedEmail:
-		response.Data = "Existed Email"
-		if err != nil {
-			response.Error = err.Error()
-		}
+		response.Error = statusCode.T()
+		//if err != nil {
+		//	response.Error = err.Error()
+		//}
 		break
 	case constants.Error:
-		response.Data = "Error"
-		if err != nil {
-			response.Error = err.Error()
-		}
+		response.Error = statusCode.T()
+		//if err != nil {
+		//	response.Error = err.Error()
+		//}
 		break
 	}
 
@@ -105,14 +105,16 @@ func Activate(w http.ResponseWriter, r *http.Request) {
 	}
 	switch status {
 	case constants.ActivateFail:
-		if err != nil {
-			data.Error = err.Error()
-		}
+		data.Error = status.T()
+		//if err != nil {
+		//	data.Error = err.Error()
+		//}
 		break
 	case constants.Error:
-		if err != nil {
-			data.Error = err.Error()
-		}
+		data.Error = status.T()
+		//if err != nil {
+		//	data.Error = err.Error()
+		//}
 		break
 	case constants.Successful:
 		token, err = common.GenerateJWT(user.ID, user.Email, "member")
@@ -182,15 +184,17 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	switch status {
 	case constants.NotActivated:
-		if err != nil {
-			data.Data = constants.NotActivated.T()
-			data.Error = err.Error()
-		}
+		data.Error = status.T()
+		//if err != nil {
+		//	data.Data = constants.NotActivated.T()
+		//	data.Error = err.Error()
+		//}
 		break
 	case constants.LoginFail:
-		if err != nil {
-			data.Error = err.Error()
-		}
+		data.Error = status.T()
+		//if err != nil {
+		//	data.Error = err.Error()
+		//}
 		break
 	case constants.Successful:
 		// Generate JWT token
@@ -257,10 +261,10 @@ func GetMyProfile(w http.ResponseWriter, r *http.Request) {
 
 	switch status {
 	case constants.Fail:
-		data.Data = constants.Fail.T()
-		if err != nil {
-			data.Error = err.Error()
-		}
+		data.Error = status.T()
+		//if err != nil {
+		//	data.Error = err.Error()
+		//}
 		break
 	case constants.Successful:
 		result.HashPassword = nil
@@ -312,10 +316,10 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 
 	switch status {
 	case constants.Fail:
-		data.Data = constants.Fail.T()
-		if err != nil {
-			data.Error = err.Error()
-		}
+		data.Error = status.T()
+		//if err != nil {
+		//	data.Error = err.Error()
+		//}
 		break
 	case constants.Successful:
 		data.Data = constants.Successful.T()
@@ -371,10 +375,10 @@ func ResendActivateCode(w http.ResponseWriter, r *http.Request) {
 		response.Data = "Successful"
 		break
 	case constants.NotExitedEmail:
-		response.Data = "Error"
-		if err != nil {
-			response.Error = err.Error()
-		}
+		response.Error = statusCode.T()
+		//if err != nil {
+		//	response.Error = err.Error()
+		//}
 		break
 	}
 
@@ -421,10 +425,10 @@ func RequestResetPassword(w http.ResponseWriter, r *http.Request) {
 		response.Data = "Successful"
 		break
 	case constants.NotExitedEmail:
-		response.Data = "Not Existed Email"
-		if err != nil {
-			response.Error = err.Error()
-		}
+		response.Error = statusCode.T()
+		//if err != nil {
+		//	response.Error = err.Error()
+		//}
 		break
 	}
 
@@ -468,16 +472,16 @@ func ResetPassword(w http.ResponseWriter, r *http.Request) {
 		response.Data = user
 		break
 	case constants.NotExitedEmail:
-		response.Data = "Not Existed Email"
-		if err != nil {
-			response.Error = err.Error()
-		}
+		response.Error = statusCode.T()
+		//if err != nil {
+		//	response.Error = err.Error()
+		//}
 		break
 	case constants.ResetPasswordFail:
-		response.Data = constants.ResetPasswordFail.T()
-		if err != nil {
-			response.Error = err.Error()
-		}
+		response.Error = statusCode.T()
+		//if err != nil {
+		//	response.Error = err.Error()
+		//}
 		break
 	}
 
@@ -504,7 +508,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 
 	switch status {
 	case constants.Fail:
-		data.Data = constants.Fail.T()
+		data.Error = status.T()
 		if err != nil {
 			data.Error = err.Error()
 		}

@@ -13,7 +13,7 @@ type ItemStore struct {
 
 func (store ItemStore) CreateItem(item model.Item) (error, constants.StatusCode) {
 	err := store.C.Insert(item)
-	if err != nil{
+	if err != nil {
 		return err, constants.InsertItemFail
 	}
 
@@ -24,14 +24,20 @@ func (store ItemStore) EditItem(item model.Item) () {
 
 }
 
-func (store ItemStore) DeleteItem(id string) () {
+func (store ItemStore) DeleteItem(id string) (error, constants.StatusCode) {
+	err := store.C.Update(bson.M{"_id": bson.ObjectIdHex(id)},
+		bson.M{"$set": bson.M{"item_status": 0}})
+	if err != nil {
+		return err, constants.DeleteItemFail
+	}
 
+	return nil, constants.Successful
 }
 
 func (store ItemStore) GetItemDetail(id string) (model.Item, error, constants.StatusCode) {
 	var item model.Item
 	err := store.C.Find(bson.M{"_id": bson.ObjectIdHex(id)}).One(item)
-	if err != nil{
+	if err != nil {
 		return model.Item{}, err, constants.GetItemDetailFail
 	}
 
@@ -40,11 +46,11 @@ func (store ItemStore) GetItemDetail(id string) (model.Item, error, constants.St
 
 func (store ItemStore) MyItem(userID string) []model.Item {
 	var result []model.Item
-	iter := store.C.Find(bson.M{"user_id": bson.ObjectIdHex(userID)}).Iter()
+	itor := store.C.Find(bson.M{"user_id": bson.ObjectIdHex(userID)}).Iter()
 
-	model := model.Item{}
-	for iter.Next(model)  {
-		result = append(result, model)
+	item := model.Item{}
+	for itor.Next(item) {
+		result = append(result, item)
 	}
 
 	return result

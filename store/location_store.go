@@ -29,7 +29,7 @@ func (store LocationStore) GetLocation(userID string) (model.Location, error, co
 
 	err := store.C.Find(bson.M{"user_id": bson.ObjectIdHex(userID)}).One(&location)
 	if err != nil{
-		return model.Location{}, err, constants.Fail
+		return model.Location{}, err, constants.GetLocationFail
 	}
 
 	return location, nil, constants.Successful

@@ -22,6 +22,7 @@ type (
 		Activated    bool          `json:"activated"`
 		ActivateCode string        `json:"activate_code"`
 		Role         string        `json:"role"`
+		//Locations    []Location    `json:"locations"`
 	}
 
 	Device struct {
@@ -46,23 +47,25 @@ type (
 	}
 
 	Item struct {
-		ID           bson.ObjectId `bson:"_id,omitempty" json:"id"`
-		UserID       bson.ObjectId `json:"user_id"`
-		Name         string        `json:"name"`
-		Description  string        `json:"description"`
-		Price        float32       `json:"price"`
-		Quantity     int           `json:"quantity"`
-		ItemUrl      string        `json:"item_url"`
-		Country      string        `json:"country"`
-		Province     string        `json:"province"`
-		Latitude     float32       `json:"latitude"`
-		Longitude    float32       `json:"longitude"`
-		CreatedDate  time.Time     `json:"created_date"`
-		ModifiedDate time.Time     `json:"modified_date"`
-		ItemStatus   int           `json:"item_status"`
+		ID           bson.ObjectId  `bson:"_id,omitempty" json:"id"`
+		UserID       bson.ObjectId  `json:"user_id"`
+		Name         string         `json:"name"`
+		Description  string         `json:"description"`
+		Price        float32        `json:"price"`
+		Quantity     int            `json:"quantity"`
+		ItemUrl      string         `json:"item_url"`
+		Country      string         `json:"country"`
+		Province     string         `json:"province"`
+		Latitude     float32        `json:"latitude"`
+		Longitude    float32        `json:"longitude"`
+		CreatedDate  time.Time      `json:"created_date"`
+		ModifiedDate time.Time      `json:"modified_date"`
+		ItemStatus   int            `json:"item_status"`
+		Offers       []ShipperOffer `json:"offers"`
+		Deal         Deal           `json:"deal"`
 	}
 
-	ShipperResponse struct {
+	ShipperOffer struct {
 		ID          bson.ObjectId `bson:"_id,omitempty" json:"id"`
 		ItemID      bson.ObjectId `json:"item_id"`
 		BuyerID     bson.ObjectId `json:"buyer_id"`

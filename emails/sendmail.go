@@ -11,7 +11,7 @@ func SendVerifyEmail(emailAddress string, code string) {
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 
 
-	body := "Dear <b>User</b>, </br> Your verification is: <b>" + code +"</b></br>";
+	body := "Dear <b>User "+ emailAddress+"</b>, </br> Your verification is: <b>" + code +"</b></br>";
 	// Send emails using d.
 	m := gomail.NewMessage()
 	m.SetHeader("From", "info@travelshipper.com")

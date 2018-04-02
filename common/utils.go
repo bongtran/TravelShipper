@@ -16,7 +16,7 @@ type (
 		HTTPStatus int    `json:"status"`
 	}
 	errorResource struct {
-		Data appError `json:"data"`
+		Data appError `json:"d"`
 	}
 	configuration struct {
 		Server, MongoDBHost, DBUser, DBPwd, Database string

@@ -16,6 +16,9 @@ const (
 	SetLocationFail   StatusCode = 51007
 	InsertItemFail    StatusCode = 51008
 	GetItemDetailFail StatusCode = 51009
+	GetLocationFail   StatusCode = 51010
+	EditItemFail StatusCode = 510011
+	DeleteItemFail StatusCode = 510012
 )
 
 var statusValue = map[StatusCode]int{
@@ -32,6 +35,9 @@ var statusValue = map[StatusCode]int{
 	SetLocationFail:   51007,
 	InsertItemFail:    51008,
 	GetItemDetailFail: 51009,
+	GetLocationFail:   51010,
+	EditItemFail : 510011,
+	DeleteItemFail : 510012,
 }
 
 var statusString = map[StatusCode]string{
@@ -48,6 +54,9 @@ var statusString = map[StatusCode]string{
 	SetLocationFail:   "SetLocationFail",
 	InsertItemFail:    "InsertItemFail",
 	GetItemDetailFail: "GetItemDetailFail",
+	GetLocationFail:   "GetLocationFail",
+	EditItemFail : "EditItemFail",
+	DeleteItemFail : "DeleteItemFail",
 }
 
 func (status StatusCode) V() int {
