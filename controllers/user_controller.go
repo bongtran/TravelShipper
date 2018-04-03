@@ -12,6 +12,7 @@ import (
 	"TravelShipper/constants"
 	"time"
 	"github.com/gorilla/mux"
+	"TravelShipper/validators"
 )
 
 // Register add a new User document
@@ -25,8 +26,19 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		common.DisplayAppError(
 			w,
 			err,
-			"Invalid User data",
-			constants.InternalError.V(),
+			"Invalid data",
+			http.StatusInternalServerError,
+		)
+		return
+	}
+
+	err = validators.ValidateRegister(dataResource)
+	if err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"Invalid data",
+			http.StatusBadRequest,
 		)
 		return
 	}
@@ -75,7 +87,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
 	data, err := json.Marshal(response)
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 	w.Write(data)
 }
 
@@ -90,10 +102,22 @@ func Activate(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"Invalid activate data",
-			constants.InternalError.V(),
+			http.StatusInternalServerError,
 		)
 		return
 	}
+
+	err = validators.ValidateActivate(dataResource)
+	if err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"Invalid data",
+			http.StatusBadRequest,
+		)
+		return
+	}
+
 	dataStore := common.NewDataStore()
 	defer dataStore.Close()
 	col := dataStore.Collection("users")
@@ -123,7 +147,7 @@ func Activate(w http.ResponseWriter, r *http.Request) {
 				w,
 				err,
 				"Eror while generating the access token",
-				constants.InternalError.V(),
+				http.StatusInternalServerError,
 			)
 			return
 		}
@@ -146,7 +170,7 @@ func Activate(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"An unexpected error has occurred",
-			constants.InternalError.V(),
+			http.StatusInternalServerError,
 		)
 		return
 	}
@@ -167,10 +191,22 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"Invalid Login data",
-			constants.InternalError.V(),
+			http.StatusInternalServerError,
 		)
 		return
 	}
+
+	err = validators.ValidateRegister(dataResource)
+	if err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"Invalid data",
+			http.StatusBadRequest,
+		)
+		return
+	}
+
 	dataStore := common.NewDataStore()
 	defer dataStore.Close()
 	col := dataStore.Collection("users")
@@ -211,7 +247,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 				w,
 				err,
 				"Eror while generating the access token",
-				constants.InternalError.V(),
+				http.StatusInternalServerError,
 			)
 			return
 		}
@@ -234,7 +270,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"An unexpected error has occurred",
-			constants.InternalError.V(),
+			http.StatusInternalServerError,
 		)
 		return
 	}
@@ -249,7 +285,7 @@ func GetMyProfile(w http.ResponseWriter, r *http.Request) {
 			w,
 			constants.InternalError.T(),
 			"Invalid Token Data",
-			constants.InternalError.V(),
+			http.StatusInternalServerError,
 		)
 		return
 	}
@@ -288,7 +324,7 @@ func GetMyProfile(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"An unexpected error has occurred",
-			constants.InternalError.V(),
+			http.StatusInternalServerError,
 		)
 		return
 	}
@@ -306,10 +342,11 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"Invalid Login data",
-			constants.InternalError.V(),
+			http.StatusInternalServerError,
 		)
 		return
 	}
+
 	dataStore := common.NewDataStore()
 	defer dataStore.Close()
 	col := dataStore.Collection("users")
@@ -341,7 +378,7 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"An unexpected error has occurred",
-			constants.InternalError.V(),
+			http.StatusInternalServerError,
 		)
 		return
 	}
@@ -359,7 +396,18 @@ func ResendActivateCode(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"Invalid User data",
-			constants.InternalError.V(),
+			http.StatusInternalServerError,
+		)
+		return
+	}
+
+	err = validators.ValidateResendActivateCode(dataResource)
+	if err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"Invalid data",
+			http.StatusBadRequest,
 		)
 		return
 	}
@@ -405,7 +453,18 @@ func RequestResetPassword(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"Invalid User data",
-			constants.InternalError.V(),
+			http.StatusInternalServerError,
+		)
+		return
+	}
+
+	err = validators.ValidateResendActivateCode(dataResource)
+	if err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"Invalid data",
+			http.StatusBadRequest,
 		)
 		return
 	}
@@ -455,7 +514,18 @@ func ResetPassword(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"Invalid User data",
-			constants.InternalError.V(),
+			http.StatusInternalServerError,
+		)
+		return
+	}
+
+	err = validators.ValidateResetPassword(dataResource)
+	if err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"Invalid data",
+			http.StatusBadRequest,
 		)
 		return
 	}
@@ -480,7 +550,7 @@ func ResetPassword(w http.ResponseWriter, r *http.Request) {
 				w,
 				err,
 				"Eror while generating the access token",
-				constants.InternalError.V(),
+				http.StatusInternalServerError,
 			)
 			return
 		}
@@ -550,7 +620,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"An unexpected error has occurred",
-			constants.InternalError.V(),
+			http.StatusInternalServerError,
 		)
 		return
 	}

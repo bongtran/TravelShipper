@@ -101,7 +101,7 @@ func (store UserStore) GetUser(id string) (model.User, error, constants.StatusCo
 
 func (store UserStore) GetActivateCode(email string) (string, error, constants.StatusCode) {
 	var user model.User
-	err := store.C.Find(bson.M{"email": email}).One(&user)
+	err := store.C.Find(bson.M{"email": email, "activated": false}).One(&user)
 	if err != nil {
 		return "", err, constants.NotExitedEmail
 	}

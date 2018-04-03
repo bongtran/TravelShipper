@@ -12,7 +12,7 @@ import (
 type (
 	appError struct {
 		Error      string `json:"error"`
-		Message    string `json:"message"`
+		Message    string `json:"d"`
 		HTTPStatus int    `json:"status"`
 	}
 	errorResource struct {
@@ -62,7 +62,7 @@ func ResponseError(w http.ResponseWriter, handlerError error, message string, co
 	w.Write(j)
 }
 
-func ResponseErrorString(w http.ResponseWriter, errString string , message string, code int) {
+func ResponseErrorString(w http.ResponseWriter, errString string, message string, code int) {
 	data := model.ResponseModel{
 		StatusCode: code,
 		Error:      errString,

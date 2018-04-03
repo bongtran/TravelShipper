@@ -20,7 +20,7 @@ func SetLocation(w http.ResponseWriter, r *http.Request) {
 			w,
 			err,
 			"Invalid Login data",
-			constants.InternalError.V(),
+			http.StatusInternalServerError,
 		)
 		return
 	}
@@ -71,7 +71,7 @@ func GetMyLocation(w http.ResponseWriter, r *http.Request) {
 			w,
 			constants.InternalError.T(),
 			"Invalid Token Data",
-			constants.InternalError.V(),
+			http.StatusInternalServerError,
 		)
 		return
 	}

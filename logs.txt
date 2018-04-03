@@ -112,3 +112,7 @@ ERROR: 2018/02/27 16:27:41 utils.go:33: AppError]: get raw bytes failed: mutator
 ERROR: 2018/02/27 16:44:58 utils.go:33: AppError]: Horizon error: "Transaction Failed". Check horizon.Error.Problem for more information.
 ERROR: 2018/02/28 16:07:08 utils.go:33: AppError]: token is expired by 14h41m31s
 ERROR: 2018/03/30 11:25:02 utils.go:35: AppError]: no token present in request
+ERROR: 2018/04/03 15:47:08 utils.go:35: AppError]: email: cannot be blank.
+ERROR: 2018/04/03 15:47:16 utils.go:35: AppError]: email: cannot be blank.
+ERROR: 2018/04/03 15:47:26 utils.go:35: AppError]: email: the length must be between 5 and 256.
+ERROR: 2018/04/03 15:47:32 utils.go:35: AppError]: email: cannot be blank.

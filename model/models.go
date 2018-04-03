@@ -120,6 +120,12 @@ type (
 	OfferSearch struct {
 	}
 
+	//--------------------
+	//Resource
+
+	//--------------------
+
+
 	Bookmark struct {
 		ID          bson.ObjectId `bson:"_id,omitempty"`
 		Name        string        `json:"name"`
