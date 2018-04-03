@@ -8,6 +8,7 @@ import (
 	"TravelShipper/model"
 	"TravelShipper/common"
 	"TravelShipper/store"
+	"time"
 )
 
 func SetLocation(w http.ResponseWriter, r *http.Request) {
@@ -24,12 +25,45 @@ func SetLocation(w http.ResponseWriter, r *http.Request) {
 		)
 		return
 	}
+
+	err = dataResource.Validate()
+	if err != nil {
+		common.DisplayAppError(
+			w,
+			err,
+			"Invalid data",
+			http.StatusBadRequest,
+		)
+		return
+	}
+
+	session := r.Context().Value("user")
+	if session == nil {
+		common.ResponseErrorString(
+			w,
+			constants.InternalError.T(),
+			"Invalid Token Data",
+			http.StatusInternalServerError,
+		)
+		return
+	}
+
 	dataStore := common.NewDataStore()
 	defer dataStore.Close()
 	col := dataStore.Collection("locations")
 	locationStore := store.LocationStore{C: col}
-	// Authenticate the login result
+	if dataResource.BeginTime.After(time.Now().UTC()){
+		dataResource.CurrentLocation = true
+	}
 	err, status := locationStore.SetLocation(dataResource)
+
+
+	dataStore = common.NewDataStore()
+	defer dataStore.Close()
+	col = dataStore.Collection("users")
+	userStore := store.UserStore{C: col}
+
+	userStore.UpdateLocation(dataResource, session.(model.User).ID.Hex())
 
 	data := model.ResponseModel{
 		StatusCode: status.V(),
@@ -80,7 +114,7 @@ func GetMyLocation(w http.ResponseWriter, r *http.Request) {
 	defer dataStore.Close()
 	col := dataStore.Collection("locations")
 	locationStore := store.LocationStore{C: col}
-	// Authenticate the login result
+
 	location, err, status := locationStore.GetLocation(session.(model.User).ID.Hex())
 
 	data := model.ResponseModel{

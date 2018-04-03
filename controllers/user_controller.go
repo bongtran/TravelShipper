@@ -12,7 +12,6 @@ import (
 	"TravelShipper/constants"
 	"time"
 	"github.com/gorilla/mux"
-	"TravelShipper/validators"
 )
 
 // Register add a new User document
@@ -32,7 +31,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = validators.ValidateRegister(dataResource)
+	err = dataResource.Validate()
 	if err != nil {
 		common.DisplayAppError(
 			w,
@@ -107,7 +106,7 @@ func Activate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = validators.ValidateActivate(dataResource)
+	err = dataResource.Validate()
 	if err != nil {
 		common.DisplayAppError(
 			w,
@@ -196,7 +195,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = validators.ValidateRegister(dataResource)
+	err = dataResource.Validate()
 	if err != nil {
 		common.DisplayAppError(
 			w,
@@ -401,7 +400,7 @@ func ResendActivateCode(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = validators.ValidateResendActivateCode(dataResource)
+	err = dataResource.ValidateEmail()
 	if err != nil {
 		common.DisplayAppError(
 			w,
@@ -458,7 +457,7 @@ func RequestResetPassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = validators.ValidateResendActivateCode(dataResource)
+	err = dataResource.ValidateEmail()
 	if err != nil {
 		common.DisplayAppError(
 			w,
@@ -519,7 +518,7 @@ func ResetPassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = validators.ValidateResetPassword(dataResource)
+	err = dataResource.Validate()
 	if err != nil {
 		common.DisplayAppError(
 			w,

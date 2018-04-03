@@ -24,6 +24,7 @@ type (
 		Role         string        `json:"role"`
 		PhoneNumber  string        `json:"phone_number"`
 		//Locations    []Location    `json:"locations"`
+		Location Location `json:"location"`
 	}
 
 	Device struct {
@@ -37,6 +38,7 @@ type (
 	Location struct {
 		ID              bson.ObjectId `bson:"_id,omitempty" json:"id"`
 		UserID          bson.ObjectId `json:"user_id"`
+		CountryCode     string        `json:"country_code"`
 		Country         string        `json:"country"`
 		Province        string        `json:"province"`
 		District        string        `json:"district"`
@@ -124,7 +126,6 @@ type (
 	//Resource
 
 	//--------------------
-
 
 	Bookmark struct {
 		ID          bson.ObjectId `bson:"_id,omitempty"`

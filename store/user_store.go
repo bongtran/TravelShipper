@@ -133,3 +133,13 @@ func (store UserStore) ResetPassword(email string, password string, code string)
 	}
 	return user, nil, constants.Successful
 }
+
+func (store UserStore) UpdateLocation(location model.Location, userID string) (error, constants.StatusCode) {
+	err := store.C.Update(bson.M{"_id": bson.ObjectIdHex(userID)},
+		bson.M{"$set": bson.M{"location": location}})
+	if err != nil {
+		return err, constants.Fail
+	}
+
+	return nil, constants.Successful
+}

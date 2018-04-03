@@ -11,6 +11,19 @@ type LocationStore struct {
 	C *mgo.Collection
 }
 
+func (store LocationStore) InsertLocation(data model.Location) (error, constants.StatusCode) {
+	err := store.C.Update(bson.M{"user_id":data.UserID},
+		bson.M{"$set": bson.M{"current_location": false}})
+	//data.CurrentLocation = true
+	err = store.C.Insert(data)
+
+	if err != nil{
+		return err, constants.SetLocationFail
+	}
+
+	return nil, constants.Successful
+}
+
 func (store LocationStore) SetLocation(data model.Location) (error, constants.StatusCode) {
 	err := store.C.Update(bson.M{"user_id":data.UserID},
 	bson.M{"$set": bson.M{"current_location": false}})
