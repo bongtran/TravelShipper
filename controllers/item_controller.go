@@ -156,7 +156,7 @@ func MySuggestItems(w http.ResponseWriter, r *http.Request) {
 	col := dataStore.Collection("items")
 	itemStore := store.ItemStore{C: col}
 
-	items := itemStore.SuggestItem(session.(model.UserLite).ID)
+	items := itemStore.SuggestItem(session.(model.UserLite).ID.Hex())
 
 	data := model.ResponseModel{
 		StatusCode: constants.Successful.V(),
