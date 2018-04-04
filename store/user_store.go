@@ -17,7 +17,7 @@ type UserStore struct {
 
 // Create insert new User
 func (store UserStore) Create(user model.User, password string) (constants.StatusCode, error) {
-	var fund model.User
+	var fund model.UserLite
 	err := store.C.Find(bson.M{"email": user.Email}).One(&fund)
 	if err == nil {
 		return constants.ExitedEmail, err
@@ -33,7 +33,7 @@ func (store UserStore) Create(user model.User, password string) (constants.Statu
 	return constants.Successful, err
 }
 
-func (store UserStore) Activate(model model.ActivateResource) (user model.User, err error, code constants.StatusCode) {
+func (store UserStore) Activate(model model.ActivateResource) (user model.UserLite, err error, code constants.StatusCode) {
 	//var user = model.User{};
 	log.Println(model.ActivateCode)
 	err = store.C.Update(bson.M{"email": model.Email, "activatecode": model.ActivateCode},
@@ -89,11 +89,11 @@ func (store UserStore) UpdateUser(user model.User) (error, constants.StatusCode)
 	return nil, constants.Successful
 }
 
-func (store UserStore) GetUser(id string) (model.User, error, constants.StatusCode) {
-	var user model.User
+func (store UserStore) GetUser(id string) (model.UserLite, error, constants.StatusCode) {
+	var user model.UserLite
 	err := store.C.FindId(bson.ObjectIdHex(id)).One(&user)
 	if err != nil {
-		return model.User{}, err, constants.Fail
+		return model.UserLite{}, err, constants.Fail
 	}
 
 	return user, nil, constants.Successful
@@ -119,17 +119,17 @@ func (store UserStore) RequestResetPassord(email string, code string) (error, co
 	return nil, constants.Successful
 }
 
-func (store UserStore) ResetPassword(email string, password string, code string) (model.User, error, constants.StatusCode) {
-	var user model.User
+func (store UserStore) ResetPassword(email string, password string, code string) (model.UserLite, error, constants.StatusCode) {
+	var user model.UserLite
 	err := store.C.Find(bson.M{"email": email}).One(&user)
 	if err != nil {
-		return model.User{}, err, constants.NotExitedEmail
+		return model.UserLite{}, err, constants.NotExitedEmail
 	}
 
 	err = store.C.Update(bson.M{"email": email, "activatecode": code},
 		bson.M{"$set": bson.M{"hashpassword": password, "modifieddate": time.Now().UTC()}})
 	if err != nil {
-		return model.User{}, err, constants.ResetPasswordFail
+		return model.UserLite{}, err, constants.ResetPasswordFail
 	}
 	return user, nil, constants.Successful
 }

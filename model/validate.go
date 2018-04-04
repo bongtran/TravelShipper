@@ -36,3 +36,14 @@ func (resource Location) Validate() error {
 		validation.Field(&resource.BeginTime, validation.Required, validation.Length(1, 128)),
 		validation.Field(&resource.Hometown, validation.Required, validation.Length(1, 128)))
 }
+
+func (resource Item) Validate() error {
+	return validation.ValidateStruct(&resource,
+		validation.Field(&resource.Country, validation.Required, validation.Length(1, 256)),
+		validation.Field(&resource.CountryCode, validation.Required, validation.Length(1, 12)),
+		validation.Field(&resource.Province, validation.Required, validation.Length(1, 128)),
+		validation.Field(&resource.Description, validation.Required, validation.Length(1, 128)),
+		validation.Field(&resource.Quantity, validation.Required),
+		validation.Field(&resource.Price, validation.Required),
+		validation.Field(&resource.Name, validation.Required, validation.Length(1, 128)),)
+}

@@ -58,7 +58,7 @@ type (
 	}
 	// AuthUserModel for authorized user with access token
 	AuthUserModel struct {
-		User  User `json:"user"`
+		User  UserLite `json:"user"`
 		Token string     `json:"token"`
 	}
 

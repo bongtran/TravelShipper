@@ -35,7 +35,7 @@ func DisplayAppError(w http.ResponseWriter, handlerError error, message string, 
 	Error.Printf("AppError]: %s\n", handlerError)
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(code)
-	if j, err := json.Marshal(errorResource{Data: errObj}); err == nil {
+	if j, err := json.Marshal(errObj); err == nil {
 		w.Write(j)
 	}
 }

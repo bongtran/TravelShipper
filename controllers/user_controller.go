@@ -151,7 +151,7 @@ func Activate(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		// Clean-up the hashpassword to eliminate it from response JSON
-		user.HashPassword = nil
+
 		authUser := model.AuthUserModel{
 			User:  user,
 			Token: token,
@@ -251,10 +251,23 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		// Clean-up the hashpassword to eliminate it from response JSON
-		result.HashPassword = nil
-		result.ActivateCode = ""
+		userData := model.UserLite{
+			Email:result.Email,
+			ID:result.ID,
+			Location:result.Location,
+			Role:result.Role,
+			MyUrl:result.MyUrl,
+			Description:result.Description,
+			LastName:result.LastName,
+			FirstName:result.FirstName,
+			Activated:result.Activated,
+			Avatar:result.Avatar,
+			IDCardUrl:result.IDCardUrl,
+			PhoneNumber:result.PhoneNumber,
+
+		}
 		authUser := model.AuthUserModel{
-			User:  result,
+			User:  userData,
 			Token: token,
 		}
 		data.Data = authUser
@@ -295,7 +308,7 @@ func GetMyProfile(w http.ResponseWriter, r *http.Request) {
 
 	//log.Println(session.(model.User).ID.String())
 	// Authenticate the login result
-	result, err, status := userStore.GetUser(session.(model.User).ID.Hex())
+	result, err, status := userStore.GetUser(session.(model.UserSession).ID.Hex())
 
 	data := model.ResponseModel{
 		StatusCode: status.V(),
@@ -309,8 +322,6 @@ func GetMyProfile(w http.ResponseWriter, r *http.Request) {
 		//}
 		break
 	case constants.Successful:
-		result.HashPassword = nil
-		result.ActivateCode = ""
 		data.Data = result
 		break
 	}
@@ -553,9 +564,6 @@ func ResetPassword(w http.ResponseWriter, r *http.Request) {
 			)
 			return
 		}
-		// Clean-up the hashpassword to eliminate it from response JSON
-		user.HashPassword = nil
-		user.ActivateCode = ""
 		authUser := model.AuthUserModel{
 			User:  user,
 			Token: token,
@@ -605,8 +613,6 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 		}
 		break
 	case constants.Successful:
-		result.HashPassword = nil
-		result.ActivateCode = ""
 		data.Data = result
 		break
 	}

@@ -63,9 +63,9 @@ func (store ItemStore) GetItemDetail(id string) (model.Item, error, constants.St
 	return item, nil, constants.Successful
 }
 
-func (store ItemStore) MyItem(userID string) []model.Item {
+func (store ItemStore) MyItem(userID bson.ObjectId) []model.Item {
 	var result []model.Item
-	itor := store.C.Find(bson.M{"user_id": bson.ObjectIdHex(userID)}).Iter()
+	itor := store.C.Find(bson.M{"user_id": userID}).Iter()
 
 	item := model.Item{}
 	for itor.Next(item) {
@@ -75,7 +75,8 @@ func (store ItemStore) MyItem(userID string) []model.Item {
 	return result
 }
 
-func (store ItemStore) SuggestItem(userID string) {
+func (store ItemStore) SuggestItem(userID string) []model.ItemLite{
+	var result []model.ItemLite
 	//query := []bson.M{{
 	//	"$lookup": bson.M{ // lookup the documents table here
 	//		"from":         "user",
@@ -90,4 +91,5 @@ func (store ItemStore) SuggestItem(userID string) {
 	//
 	//pipe := store.C.Pipe(query)
 	//err := pipe.All(&folders)
+	return result
 }
