@@ -42,7 +42,6 @@ func (store ItemStore) EditItem(item model.Item) (error, constants.StatusCode) {
 	return nil, constants.Successful
 }
 
-
 func (store ItemStore) DeleteItem(id string) (error, constants.StatusCode) {
 	err := store.C.Update(bson.M{"_id": bson.ObjectIdHex(id)},
 		bson.M{"$set": bson.M{"item_status": 0}})
@@ -53,9 +52,9 @@ func (store ItemStore) DeleteItem(id string) (error, constants.StatusCode) {
 	return nil, constants.Successful
 }
 
-func (store ItemStore) GetItemDetail(id string) (model.Item, error, constants.StatusCode) {
+func (store ItemStore) GetItemDetail(id bson.ObjectId) (model.Item, error, constants.StatusCode) {
 	var item model.Item
-	err := store.C.Find(bson.M{"_id": bson.ObjectIdHex(id)}).One(item)
+	err := store.C.Find(bson.M{"_id": id}).One(item)
 	if err != nil {
 		return model.Item{}, err, constants.GetItemDetailFail
 	}
@@ -65,7 +64,7 @@ func (store ItemStore) GetItemDetail(id string) (model.Item, error, constants.St
 
 func (store ItemStore) MyItem(userID bson.ObjectId) []model.Item {
 	var result []model.Item
-	itor := store.C.Find(bson.M{"user_id": userID}).Iter()
+	itor := store.C.Find(bson.M{"user_id": userID, "item_status": bson.M{"$ne": 0}}).Iter()
 
 	item := model.Item{}
 	for itor.Next(item) {
@@ -75,7 +74,7 @@ func (store ItemStore) MyItem(userID bson.ObjectId) []model.Item {
 	return result
 }
 
-func (store ItemStore) SuggestItem(userID string) []model.ItemLite{
+func (store ItemStore) SuggestItem(userID string) []model.ItemLite {
 	var result []model.ItemLite
 	//query := []bson.M{{
 	//	"$lookup": bson.M{ // lookup the documents table here

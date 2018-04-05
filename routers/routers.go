@@ -12,6 +12,7 @@ func InitRouters() *mux.Router {
 	// Routes for the Bookmark entity
 	router = SetBookmarkRoutes(router)
 	router = SetLocationRoutes(router)
+	router = SetItemRoutes(router)
 
 	return router
 }

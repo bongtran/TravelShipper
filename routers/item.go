@@ -10,7 +10,7 @@ func SetItemRoutes(router *mux.Router) *mux.Router {
 	locationRouter := mux.NewRouter()
 	locationRouter.HandleFunc("/items", controllers.MyItems).Methods("GET")
 	locationRouter.HandleFunc("/items", controllers.CreateItem).Methods("POST")
-	//locationRouter.HandleFunc("/users/{id}", controllers.GetUser).Methods("GET")
-	router.PathPrefix("/locations").Handler(common.AuthorizeRequest(locationRouter))
+	locationRouter.HandleFunc("/items/{id}", controllers.ItemDetail).Methods("GET")
+	router.PathPrefix("/items").Handler(common.AuthorizeRequest(locationRouter))
 	return router
 }
